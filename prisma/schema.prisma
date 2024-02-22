@@ -1,0 +1,44 @@
+//🧩Don't Edit this file.✨Generated in Thu Feb 22 2024 01:38:42 GMT-0500 (Colombia Standard Time)✨
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Products {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String
+  price       Int
+  sales       Sales[]
+}
+
+model Roles {
+  id    Int     @id @default(autoincrement())
+  name  String
+  users Users[]
+}
+
+model Sales {
+  id          Int      @id @default(autoincrement())
+  qty         Int
+  sales_at    DateTime @default(now())
+  users_id    Int
+  users       Users    @relation(fields: [users_id], references: [id])
+  products_id Int
+  products    Products @relation(fields: [products_id], references: [id])
+}
+
+model Users {
+  id        Int     @id @default(autoincrement())
+  name      String
+  last_name String
+  document  String
+  rol       Roles?  @relation(fields: [rol_id], references: [id])
+  rol_id    Int?
+  sales     Sales[]
+}

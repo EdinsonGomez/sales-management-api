@@ -1,0 +1,9 @@
+import { Sales } from "../sales/sales"
+
+model Products {
+  id          Int @id @default(autoincrement())
+  name        String
+  description String
+  price       Int
+  sales       Sales[]
+}

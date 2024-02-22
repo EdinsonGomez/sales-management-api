@@ -1,0 +1,12 @@
+import { Users } from "../users/users"
+import { Products } from "../products/products"
+
+model Sales {
+  id            Int @id @default(autoincrement())
+  qty           Int
+  sales_at      DateTime @default(now())
+  users_id      Int
+  users         Users @relation(fields: [users_id], references: [id])
+  products_id   Int
+  products      Products @relation(fields: [products_id], references: [id])
+}

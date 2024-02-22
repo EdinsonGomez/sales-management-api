@@ -1,0 +1,12 @@
+import { Roles } from "../roles/roles"
+import { Sales } from "../sales/sales"
+
+model Users {
+  id          Int @id @default(autoincrement())
+  name        String
+  last_name   String
+  document    String
+  rol         Roles? @relation(fields: [rol_id], references: [id])
+  rol_id      Int?
+  sales       Sales[]
+}
