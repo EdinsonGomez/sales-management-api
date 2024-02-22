@@ -1,0 +1,44 @@
+const prisma = require('../db');
+
+const getSales = async (req, res) => {
+  try {
+    const sales = await prisma.sales.findMany({ include: { products: true, users: true }});
+
+    return res.status(200).json(sales);
+  } catch(error) {
+    console.error("Error [asignRolToUserById]: ", error);
+    return res.status(400).json({ error: "Internal server error" });
+  }
+};
+
+const createSales = async (req, res) => {
+  try {
+    const userId = req.headers?.auth;
+
+    if (!userId) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const data = {
+      ...req.body,
+      users_id: +userId,
+      sales_at: new Date().toISOString(),
+    };
+
+    if (!data.products_id) {
+      return res.status(400).json({ error: "Products empty" });
+    }
+
+    const newSale = await prisma.sales.create({ data });
+
+    return res.status(200).json(newSale);
+  } catch(error) {
+    console.error("Error [asignRolToUserById]: ", error);
+    return res.status(400).json({ error: "Internal server error" });
+  }
+}
+
+module.exports = {
+  getSales,
+  createSales,
+}
