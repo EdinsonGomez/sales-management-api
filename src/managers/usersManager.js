@@ -1,7 +1,7 @@
 const prisma = require('../db');
 
 const getUsers = async (req, res) => {
-  const users = await prisma.users.findMany();
+  const users = await prisma.users.findMany({ include: { rol: true }});
 
   return res.status(200).send(users);
 }
@@ -27,16 +27,26 @@ const asignRolToUserById = async (req, res) => {
     if (!rol_id) {
       return res.status(400).json({ error: "Rol field is empty" });
     }
-
     const user = await prisma.users.update({
       where: { id: +userId },
       data: { rol_id },
       include: { rol: true }
     })
 
-    console.log("userId: ", user);
-
     return res.status(200).json(user);
+  } catch(error) {
+    console.error("Error [asignRolToUserById]: ", error);
+    return res.status(400).json({ error: "Internal server error" });
+  }
+}
+
+const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params?.id;
+
+    const userDeleted = await prisma.users.delete({ where: { id: +userId }});
+
+    return res.status(200).json(userDeleted);
   } catch(error) {
     console.error("Error [asignRolToUserById]: ", error);
     return res.status(400).json({ error: "Internal server error" });
@@ -47,4 +57,5 @@ module.exports = {
   getUsers,
   createUser,
   asignRolToUserById,
+  deleteUser,
 }
