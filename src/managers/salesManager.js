@@ -38,7 +38,29 @@ const createSales = async (req, res) => {
   }
 }
 
+const updateSales = async (req, res) => {
+  try {
+    const salesId = req.params?.id;
+    const data = req.body ?? {};
+
+    if (!salesId) {
+      return res.status(404).json({ error: "Sales not found" });
+    }
+
+    const sales = await prisma.sales.update({
+      where: { id: +salesId },
+      data,
+    });
+
+    return res.status(200).json(sales);
+  } catch(error) {
+    console.error("Error [asignRolToUserById]: ", error);
+    return res.status(400).json({ error: "Internal server error" });
+  }
+}
+
 module.exports = {
   getSales,
   createSales,
+  updateSales,
 }
