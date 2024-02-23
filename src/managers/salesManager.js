@@ -1,8 +1,9 @@
 const prisma = require('../db');
+const { getSalesWithTotal } = require("../utils/salesUtils");
 
 const getSales = async (req, res) => {
   try {
-    const sales = await prisma.sales.findMany({ include: { products: true, users: true }});
+    const sales = await getSalesWithTotal();
 
     return res.status(200).json(sales);
   } catch(error) {
