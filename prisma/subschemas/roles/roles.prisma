@@ -2,6 +2,6 @@ import { Users } from "../users/users"
 
 model Roles {
   id    Int @id @default(autoincrement())
-  name  String
+  name  String @unique
   users Users[]
 }
