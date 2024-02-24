@@ -30,14 +30,12 @@ Una vez instalado incia postgresql como servicio. Luego crea la base de datos co
 
 ```
 CREATE DATABASE "nombre";
-
 ```
 
 para comprobar que la base de datos se haya creado con exito, escribe el siguiente comando en consola para listar todas la bases de datos:
 
 ```
 \l
-
 ```
 
 ### 4. Variables de entorno
@@ -46,7 +44,6 @@ Para iniciar este proyecto, debes agregar las siguientes variables de entorno en
 
 ```
 DATABASE_URL="postgresql://username:password@localhost:5432/mydb?schema=public"
-
 ```
 
 Modifica esta variable de entorno con tu `username`, `password` y nombre de la base de datos.
@@ -57,7 +54,6 @@ Para conectar con la base de datos se utiliza el ORM Prisma, que nos permite mig
 
 ```
 npx prisma migrate dev
-
 ```
 
 (más información [aquí](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases/using-prisma-migrate-node-postgresql))
@@ -68,7 +64,6 @@ Para inciar el proyecto solo escribe en consola el siguiente comando:
 
 ```
 npm run dev
-
 ```
 
 Esto iniciara un servidor de NodeJs en el puerto `3000`;
